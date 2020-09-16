@@ -64,8 +64,8 @@ export async function parsePackageJsonFiles(
 
 export function hasDependencies(pack: PackageJsonFile): boolean {
   return (
-    (pack.deps || []).length > 0 ||
-    (pack.devDeps || []).length > 0 ||
+    (pack.deps || []).length > 0 &&
+    (pack.devDeps || []).length > 0 &&
     (pack.optionalDeps || []).length > 0
   )
 }
