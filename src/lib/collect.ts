@@ -2,12 +2,12 @@ import { cyan } from 'chalk'
 import { glob, safeStat } from './fs'
 
 export interface CollectPackageJsonOptions {
-  recurive?: boolean
+  recursive?: boolean
 }
 
 export async function collectPackageJsonFiles(
   path: string,
-  { recurive }: CollectPackageJsonOptions
+  { recursive: recurive }: CollectPackageJsonOptions
 ): Promise<string[]> {
   const stat = await safeStat(path)
 

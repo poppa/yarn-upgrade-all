@@ -12,7 +12,7 @@ import { getTasks } from './lib/tasks'
 
 export async function main(): Promise<boolean> {
   const path = argv._[0] ?? '.'
-  const files = await collectPackageJsonFiles(path, { recurive: argv.r })
+  const files = await collectPackageJsonFiles(path, { recursive: argv.r })
   const packs = await parsePackageJsonFiles(files)
 
   for (const p of packs) {
