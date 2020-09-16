@@ -1,5 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('source-map-support').install()
+#!/usr/bin/env node
+import { install } from 'source-map-support'
+install()
 
 import { yellow } from 'chalk'
 import inquirer from 'inquirer'
