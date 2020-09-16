@@ -18,8 +18,6 @@ export async function collectPackageJsonFiles(
   }
 
   if (stat.isDirectory()) {
-    console.log(`Handle directory`)
-
     if (!path.endsWith('/')) {
       path += '/'
     }
