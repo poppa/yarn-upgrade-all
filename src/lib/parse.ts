@@ -11,6 +11,28 @@ export interface PackageJsonFile {
   readonly error?: Error
 }
 
+function filterInternal(packs: PackageJsonFile[]): PackageJsonFile[] {
+  const names = packs.map((p) => p.name)
+
+  const rm = (deps?: IDependencyMap): void => {
+    if (deps) {
+      Object.keys(deps).forEach((n) => {
+        if (names.includes(n)) {
+          delete deps[n]
+        }
+      })
+    }
+  }
+
+  for (const p of packs) {
+    rm(p.deps)
+    rm(p.devDeps)
+    rm(p.optionalDeps)
+  }
+
+  return packs
+}
+
 export async function parsePackageJsonFiles(
   files: string[]
 ): Promise<PackageJsonFile[]> {
@@ -37,5 +59,13 @@ export async function parsePackageJsonFiles(
     }
   }
 
-  return packs
+  return filterInternal(packs)
+}
+
+export function hasDependencies(pack: PackageJsonFile): boolean {
+  return (
+    (pack.deps || []).length > 0 ||
+    (pack.devDeps || []).length > 0 ||
+    (pack.optionalDeps || []).length > 0
+  )
 }

@@ -7,7 +7,7 @@ import inquirer from 'inquirer'
 import Listr from 'listr'
 import { argv } from './args'
 import { collectPackageJsonFiles } from './lib/collect'
-import { parsePackageJsonFiles } from './lib/parse'
+import { hasDependencies, parsePackageJsonFiles } from './lib/parse'
 import { getTasks } from './lib/tasks'
 
 export async function main(): Promise<boolean> {
@@ -16,6 +16,13 @@ export async function main(): Promise<boolean> {
   const packs = await parsePackageJsonFiles(files)
 
   for (const p of packs) {
+    if (!hasDependencies(p)) {
+      console.info(
+        `Package ${yellow(p.name)} has no packages, so nothing to upgrade`
+      )
+      continue
+    }
+
     const ok = await inquirer.prompt({
       message: `Do you want to upgrade all packages in ${yellow(p.name)}`,
       type: 'confirm',
