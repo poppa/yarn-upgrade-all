@@ -7,7 +7,7 @@ export interface CollectPackageJsonOptions {
 
 export async function collectPackageJsonFiles(
   path: string,
-  { recursive: recurive }: CollectPackageJsonOptions
+  { recursive }: CollectPackageJsonOptions
 ): Promise<string[]> {
   const stat = await safeStat(path)
 
@@ -22,7 +22,7 @@ export async function collectPackageJsonFiles(
       path += '/'
     }
 
-    if (recurive) {
+    if (recursive) {
       const globPath = `${path}**/package.json`
 
       files = await glob(globPath, {
